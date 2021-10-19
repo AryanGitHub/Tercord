@@ -59,20 +59,5 @@ public class Bot extends ListenerAdapter
         }
     }
     
-    public void runBash (MessageReceivedEvent event) throws IOException {
-    	Message msg = event.getMessage();
-    	MessageChannel channel = event.getChannel();
-    	String command = msg.getContentRaw().substring(4).strip();
-    	int totalOutputCharacters = 0;
-    	Process p = Runtime.getRuntime().exec("cmd "+command);  
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));  
-        String line = null;  
-        System.out.println ("we are here");
-        while ((line = in.readLine()) != null) {  
-        	if (line.length() > 0)
-            channel.sendMessage(line).queue();
-            System.out.println (line);
-        }  
-        
-    }
+
 }
