@@ -16,12 +16,12 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Bot extends ListenerAdapter
 {
-	CommandPromptProcess cpp = new CommandPromptProcess("cmd");
+	static CommandPromptProcess cpp ;
     public static void main(String[] args) throws LoginException
     {
 
     	String Token = args[0];
-    	
+    	cpp = new CommandPromptProcess(args[1]);
         JDABuilder.createLight(Token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
             .addEventListeners(new Bot())
             //.setActivity(Activity.playing("Type !ping"))
