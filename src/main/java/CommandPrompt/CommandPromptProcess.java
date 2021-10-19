@@ -9,6 +9,8 @@ import java.io.OutputStreamWriter;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
 
+enum ProcessState {notInitialized , initialized , deploying, idle , running , dead};
+
 public class CommandPromptProcess {
 	
 	public static final int timeout = 1000*60*60; //in microseconds
@@ -18,6 +20,7 @@ public class CommandPromptProcess {
 	private Process p;
 	private ReadingCommandPrompt readingCommandPrompt ;
 	BufferedWriter bw; //to give command to the CommandPrompt 
+	private ProcessState processState = ProcessState.notInitialized; 
 	
 	
 	
@@ -26,22 +29,28 @@ public class CommandPromptProcess {
 		pb = new ProcessBuilder(shellType);
 		p = null;
 		readingCommandPrompt = null;
-		
+		processState = ProcessState.initialized; 
 	}
 	
 	public void deployCommandPrompt () throws IOException {
-		if (p == null || !p.isAlive()) {
+		if (p == null || !p.isAlive() || processState == ProcessState.initialized) {
+		processState = ProcessState.deploying; //not much use cus its set to idle after deployed
 		p = pb.start();
 		readingCommandPrompt = new ReadingCommandPrompt(p.getInputStream());
 		readingCommandPrompt.start();
 		bw  = new BufferedWriter(new OutputStreamWriter (p.getOutputStream())); 
+		processState = ProcessState.idle;
 		}
 	}
 	
 	public void sendCommand (String command , MessageChannel channel) throws IOException {
+		//if (processState == ProcessState.idle) { this is commented because finding back when process becomes idle from running is a lot difficult to implemented. 
+		//processState = ProcessState.running;
 		readingCommandPrompt.setMessageChannel(channel);
 		bw.write(command+"\n");
 		bw.flush();
+		
+		//}
 	}
 	
 	
