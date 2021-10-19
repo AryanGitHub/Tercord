@@ -7,7 +7,7 @@ A [Discord](https://en.wikipedia.org/wiki/Discord_%28software%29) bot , that con
 It accepts many shells like [sh](https://en.wikipedia.org/wiki/Bourne_shell), [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) and [zsh](https://en.wikipedia.org/wiki/Z_shell) to name a few....
 
 ## Table of Contents
- - **[Intro](#intro)**
+ - **[Intro](#introduction)**
  - **[Aim/Objective](#objective)**
  - **[Technologies Used](#technologies-used)**
  - **[Future Aim](#future-aim)** (What is needed to be done!)
