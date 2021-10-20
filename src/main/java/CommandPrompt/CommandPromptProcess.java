@@ -35,7 +35,7 @@ public class CommandPromptProcess {
 	public void deployCommandPrompt () throws IOException {
 		if (p == null || !p.isAlive() || processState == ProcessState.initialized) {
 		processState = ProcessState.deploying; //not much use cus its set to idle after deployed
-		pb.redirectErrorStream(true);//now we will also see errors while reading the output
+		pb.redirectErrorStream(true);//now we will also see "errors of commandPrompt" while reading the output
 		p = pb.start();
 		readingCommandPrompt = new ReadingCommandPrompt(p.getInputStream());
 		readingCommandPrompt.start();
