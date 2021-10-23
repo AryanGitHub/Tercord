@@ -79,7 +79,7 @@ class ReadingCommandPrompt extends Thread {
 				System.out.print(ch);
 				sb.append(ch);
 				//do the stuff here
-				if (ch == '\n' || ch == '>') {
+				if (ch == '\n' || ch == '>' || ch == '$') {
 				String data = sb.toString();
 				if (!(data.isBlank()) && channel != null)	
 				channel.sendMessage(data).queue();
