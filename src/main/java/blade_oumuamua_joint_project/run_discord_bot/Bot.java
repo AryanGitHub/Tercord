@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.requests.RestAction;
 
 public class Bot extends ListenerAdapter
 {
@@ -41,6 +42,22 @@ public class Bot extends ListenerAdapter
                    .queue(response /* => Message */ -> {
                        response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
                    });
+        }
+        
+        if (msg.getContentRaw().equals("!rtest"))
+        {
+            
+            long time = 0;
+            channel.sendMessage("Pong!").queue((message) -> {
+            	System.out.println (message.getAuthor().getName());
+        
+            	message.editMessage("Message edited after 5 seconds!").queue();
+
+            	
+            	channel.editMessageById(message.getId(), "helloagain").queue();
+            });; /* => RestAction<Message> */
+                 
+                
         }
         
         if (msg.getContentRaw().contains("!run"))
