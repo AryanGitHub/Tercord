@@ -47,7 +47,7 @@ public class CommandPromptProcess {
 		readingCommandPrompt = new ReadingCommandPrompt(p.getInputStream());
 		readingCommandPrompt.start();
 		bw  = new BufferedWriter(new OutputStreamWriter (p.getOutputStream()));
-		//this.setAutoKillTimeout(CommandPromptProcess.TIMEOUT_TIME);
+		this.setAutoKillTimeout(CommandPromptProcess.TIMEOUT_TIME);
 		processState = ProcessState.idle;
 		}
 	}
