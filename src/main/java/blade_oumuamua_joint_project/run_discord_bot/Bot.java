@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import javax.security.auth.login.LoginException;
 
+import BotFeaturesCodes.CProgramRunner;
 import CommandPrompt.CommandPromptProcess;
 import commandHandling.Command;
 import commandHandling.CommandHandler;
@@ -78,7 +79,33 @@ public class Bot extends ListenerAdapter
 			}
 		};
        
-		startCommand.addSubCommand(bashRunner);
+		//startCommand.addSubCommand(bashRunner);
+		
+	Command cCompiler = new Command("c") {
+			
+			@Override
+			public void action() {
+				
+				
+						try {
+							cpp.deployCommandPrompt();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println (this.arguments.get(0).trim());
+						channel.sendMessage("your source code is\n"+this.arguments.get(0).trim()).queue();
+					    try {
+							CProgramRunner.runCCode("/home/test2/workspace/testtempccodes", this.arguments.get(0).trim(), cpp, channel);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				
+			}
+		};
+       
+		startCommand.addSubCommand(cCompiler);
 		
 		CommandHandler.HandleCommand(msg.getContentRaw(), startCommand);
      
