@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import javax.security.auth.login.LoginException;
 
 import CommandPrompt.CommandPromptProcess;
+import commandHandling.Command;
+import commandHandling.CommandHandler;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -34,46 +36,52 @@ public class Bot extends ListenerAdapter
     {
         Message msg = event.getMessage();
         MessageChannel channel = event.getChannel();
-        if (msg.getContentRaw().equals("!ping"))
-        {
-            
-            long time = System.currentTimeMillis();
-            channel.sendMessage("Pong!") /* => RestAction<Message> */
-                   .queue(response /* => Message */ -> {
-                       response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
-                   });
-        }
         
-        if (msg.getContentRaw().equals("!rtest"))
-        {
-            
-            long time = 0;
-            channel.sendMessage("Pong!").queue((message) -> {
-            	System.out.println (message.getAuthor().getName());
         
-            	message.editMessage("Message edited after 5 seconds!").queue();
-
-            	
-            	channel.editMessageById(message.getId(), "helloagain").queue();
-            });; /* => RestAction<Message> */
-                 
-                
-        }
         
-        if (msg.getContentRaw().contains("!run"))
-        {
-           
-          
-           try {
-        	cpp.deployCommandPrompt();
-        	//Thread.sleep(1000*100);
-			cpp.sendCommand(msg.getContentRaw().substring(4).trim(), channel);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-           
-        }
+        
+	Command startCommand = new Command("!run") {
+			
+			@Override
+			public void action() {				
+			}
+		};
+		
+	Command ping = new Command("ping") {
+			
+			@Override
+			public void action() {
+				long time = System.currentTimeMillis();
+	            channel.sendMessage("Pong!") /* => RestAction<Message> */
+	                   .queue(response /* => Message */ -> {
+	                       response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
+	                   });
+				
+			}
+		};
+		startCommand.addSubCommand(ping);
+       
+	Command bashRunner = new Command("bash") {
+			
+			@Override
+			public void action() {
+				
+				 try {
+			        	cpp.deployCommandPrompt();
+			        	//Thread.sleep(1000*100);
+						cpp.sendCommand(this.arguments.get(0).trim() , channel);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			}
+		};
+       
+		startCommand.addSubCommand(bashRunner);
+		
+		CommandHandler.HandleCommand(msg.getContentRaw(), startCommand);
+     
     }
     
 
