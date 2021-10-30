@@ -39,7 +39,7 @@ public class WritingCommpandPromptToDiscord {
 					
 					EmbedBuilder eb = makeEmbed();
 					System.out.println(data);
-					eb.setDescription(data);
+					eb.setDescription("```\n"+data+"\n```");
 					MessageID = channel.sendMessage(eb.build()).complete().getId();					
 					commandPromptData.clearOldCommandPromptData();
 					
@@ -48,7 +48,7 @@ public class WritingCommpandPromptToDiscord {
 				}
 				else {
 					EmbedBuilder eb = makeEmbed();
-					eb.setDescription(commandPromptData.toStringOldCommandPromptData()+commandPromptData.toStringCommandPromptData());
+					eb.setDescription("```\n"+commandPromptData.toStringOldCommandPromptData()+commandPromptData.toStringCommandPromptData()+"\n```");
 					channel.editMessageById(MessageID, eb.build()).queue();
 				}
 				

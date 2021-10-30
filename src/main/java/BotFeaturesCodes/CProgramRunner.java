@@ -11,7 +11,7 @@ public class CProgramRunner {
 	
 	public static void runCCode (String dir , String args, CommandPromptProcess cpp, MessageChannel channel) throws IOException {
 		
-		File f = new File (dir+"\\tempfile.c");
+		File f = new File (dir+"/tempfile.c");
 		f.createNewFile();
 		FileWriter w = new FileWriter(f);
 		w.write(getCCodeFromArguments(args));

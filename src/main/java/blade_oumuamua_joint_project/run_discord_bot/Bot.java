@@ -93,8 +93,8 @@ public class Bot extends ListenerAdapter
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						System.out.println (this.arguments.get(0).trim());
-						channel.sendMessage("your source code is\n"+this.arguments.get(0).trim()).queue();
+						//System.out.println (this.arguments.get(0).trim());
+						//channel.sendMessage("your source code is\n"+this.arguments.get(0).trim()).queue();
 					    try {
 							CProgramRunner.runCCode("/home/test2/workspace/testtempccodes", this.arguments.get(0).trim(), cpp, channel);
 						} catch (IOException e) {
